@@ -134,7 +134,7 @@ $('#treeview > table:nth-child(5) > tbody > tr > td').click(function () {
 });
 
 $('#treeview > table:nth-child(7) > tbody > tr > td').click(function () {
-    $('#treeviewn9Nodes > table > tbody > tr > td').toggleClass('active');
+    $('#treeviewn10Nodes > table > tbody > tr > td').toggleClass('active'); // Change this to n10 to fix this
 
         });
 });

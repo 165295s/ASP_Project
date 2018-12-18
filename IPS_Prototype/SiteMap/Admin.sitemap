@@ -14,7 +14,7 @@
       <siteMapNode url="Fundraising_Management.aspx" title="Fundraising Management"  description="Fundraising Management" />
       <siteMapNode url="Fundraising_AddDonations.aspx" title="Fundraising Campaign"  description="Add Donation" />
     </siteMapNode>
-    <siteMapNode url="none2.aspx" title="&lt;img src='../Images/Administrator.svg' style='width:23px; height:23px; margin-left:7px;' class='icons' id='AdministratorIcon'&gt;Administrator"  description="Administrator">
+    <siteMapNode url="none2.aspx" title="&lt;img src='../Images/Administrator.svg' style='width:23px; height:23px; margin-left:3px;' class='icons' id='AdministratorIcon'&gt;Administrator"  description="Administrator">
       <siteMapNode url="User_Management.aspx" title="User Management"  description="Manage Users" />
       <siteMapNode url="Maintainence_Management.aspx" title="Code Maintainence"  description="Maintain Code" />
     </siteMapNode>

@@ -9,6 +9,8 @@ using IPS_Prototype.Class;
 using System.Data.SqlClient;
 using System.Data;
 using IPS_Prototype.RetrieveClass;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace IPS_Prototype
 {
@@ -77,8 +79,29 @@ namespace IPS_Prototype
 
 
                     DatabaseDAO user = new DatabaseDAO();
-                    check = user.AddUser(User_Input_Username.Value, User_Input_Name.Value, User_Input_Email.Value, DateTime.Now, Select_Permission_Level.Value);
+                    //byte[] salt;
+                    //new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+                    //var pbkdf2 = new Rfc2898DeriveBytes(User_Input_Password.Value.ToString(), salt, 1000);
+                    //byte[] hash = pbkdf2.GetBytes(20);
+                    //byte[] hashBytes = new byte[36];
+                    //Array.Copy(salt, 0, hashBytes, 0, 16);
+                    //Array.Copy(hash, 0, hashBytes, 16, 20);
+                    //string savedPasswordHash = Convert.ToBase64String(hashBytes);
+                    //string savedSalt = Convert.ToBase64String(salt);
+                    //check = user.AddUser(User_Input_Username.Value, User_Input_Name.Value, User_Input_Email.Value, DateTime.Now, Select_Permission_Level.Value);
 
+                    RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+                    byte[] saltByte = new byte[8];
+                    rng.GetBytes(saltByte);
+                    string salt = Convert.ToBase64String(saltByte);
+                    SHA512Managed hashing = new SHA512Managed();
+                    string pwdWithSalt = User_Input_Password.Value + salt;
+                    byte[] hashWithSalt = hashing.ComputeHash(Encoding.UTF8.GetBytes(pwdWithSalt));
+                    string savedPasswordHash = Convert.ToBase64String(hashWithSalt);
+                    if (User_Input_Password.Value.Trim().Equals(User_Input_Confirm_Password.Value.Trim()))
+                    {
+                        check = user.AddUser(User_Input_Username.Value, User_Input_Name.Value, User_Input_Email.Value, DateTime.Now, Select_Permission_Level.Value, savedPasswordHash, salt);
+                    }
 
                     if (check == 1)
                     {
@@ -94,6 +117,8 @@ namespace IPS_Prototype
                     User_Input_Email.Value = "";
                     Select_Permission_Level.SelectedIndex = 0;
                     User_Input_Username.Value = "";
+                    User_Input_Password.Value = "";
+                    User_Input_Confirm_Password.Value = "";
 
 
 

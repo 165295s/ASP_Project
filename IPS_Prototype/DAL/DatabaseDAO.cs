@@ -13,6 +13,7 @@ using IPS_Prototype.Class;
 using IPS_Prototype.Model;
 using IPS_Prototype.RetrieveClass;
 using System.Collections;
+using System.Security.Cryptography;
 
 namespace IPS_Prototype.DAL
 {
@@ -135,7 +136,7 @@ namespace IPS_Prototype.DAL
 
 
         //To create new user in User_Add.aspx
-        public int AddUser(string user_name, string full_name, string email_addr, DateTime created_date, string role_type)
+        public int AddUser(string user_name, string full_name, string email_addr, DateTime created_date, string role_type, string hash, string salt)
         {
 
             int result = 0;
@@ -144,10 +145,16 @@ namespace IPS_Prototype.DAL
                 List<SqlCommand> transcommand = new List<SqlCommand>();
             SqlCommand mycmd = new SqlCommand();
 
-                string commandtext = "INSERT INTO admin.TBL_USERS (User_Name, Full_Name, Email_Addr, Created_DT, Role_Type) VALUES (@user_name, @full_name, @email_addr, @created_date, @role_type);";
+                //byte[] salt;
+                //new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+                //var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 1000);
+
+
+
+                string commandtext = "INSERT INTO admin.TBL_USERS (User_Name, Full_Name, Email_Addr, Created_DT, Role_Type,HASH_PWD,SALT) VALUES (@user_name, @full_name, @email_addr, @created_date, @role_type,@hash,@salt);";
                 
 
-            mycmd = dbhelp.CreateCommand(commandtext, CommandType.Text,"@user_name", user_name, "@full_name", full_name, "@email_addr", email_addr, "@created_date", created_date, "@role_type", role_type);
+            mycmd = dbhelp.CreateCommand(commandtext, CommandType.Text,"@user_name", user_name, "@full_name", full_name, "@email_addr", email_addr, "@created_date", created_date, "@role_type", role_type,"@hash",hash,"@salt",salt);
 
             transcommand.Add(mycmd);
 
@@ -173,11 +180,14 @@ namespace IPS_Prototype.DAL
         {
             UserAddInfo user = new UserAddInfo();
             DataTable dt;
-            string commandtext = "SELECT Full_Name, Email_Addr, Role_Type FROM admin.TBL_USERS WHERE User_Name = @user_name";
+            string commandtext = "SELECT Full_Name, Email_Addr, Role_Type, HASH_PWD, SALT FROM admin.TBL_USERS WHERE User_Name = @user_name";
             dt = dbhelp.ExecDataReader(commandtext, "@user_name", UserID);
             user.Name = dt.Rows[0]["Full_Name"].ToString();
             user.Email = dt.Rows[0]["Email_Addr"].ToString();
             user.Role = dt.Rows[0]["Role_Type"].ToString();
+            user.Salt = dt.Rows[0]["SALT"].ToString();
+            user.Hash = dt.Rows[0]["HASH_PWD"].ToString();
+          
             return user;
         }
 

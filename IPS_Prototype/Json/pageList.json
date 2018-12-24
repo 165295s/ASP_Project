@@ -35,12 +35,20 @@
       "page": [ "User_Management.aspx", "Member_MemberManagement.aspx" ]
     },
     {
+
+      "role": "Staff",
+      "page": [ "User_Management.aspx" ]
+  
+    },
+    {
       "role": "TempStaff",
       "page": [ "Report" ]
+
     },
     {
       "role": "",
-      "page": ["CustomErrorPage.aspx"]
+      "page": [ "CustomErrorPage.aspx" ]
+
     }
   ]
 }

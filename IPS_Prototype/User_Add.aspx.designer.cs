@@ -67,6 +67,24 @@ namespace IPS_Prototype {
         protected global::System.Web.UI.HtmlControls.HtmlInputText User_Input_Username;
         
         /// <summary>
+        /// User_Input_Password control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText User_Input_Password;
+        
+        /// <summary>
+        /// User_Input_Confirm_Password control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText User_Input_Confirm_Password;
+        
+        /// <summary>
         /// UserSubmit control.
         /// </summary>
         /// <remarks>

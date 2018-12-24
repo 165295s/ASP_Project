@@ -8,8 +8,8 @@ using IPS_Prototype.DAL;
 
 using IPS_Prototype.Class;
 using IPS_Prototype.RetrieveClass;
-
-
+using System.Security.Cryptography;
+using System.Text;
 
 namespace IPS_Prototype
 {
@@ -29,6 +29,10 @@ namespace IPS_Prototype
                 DatabaseDAO userObj = new DatabaseDAO();
                 UserAddInfo user = new UserAddInfo();
 
+               
+               
+
+               
 
                 // Get user Roles, Name and Email to store in session of MasterPage and
                 user = userObj.GetData(User_Login.Value);
@@ -36,7 +40,14 @@ namespace IPS_Prototype
 
                 string Name = user.Name;
                 string Email = user.Email;
-                if (role != null || Name != null || Email != null)
+
+                SHA512Managed hashing = new SHA512Managed();
+                string pwdWithSalt = Password_Login.Value + user.Salt;
+                byte[] hashWithSalt = hashing.ComputeHash(Encoding.UTF8.GetBytes(pwdWithSalt));
+                string savedPasswordHash = Convert.ToBase64String(hashWithSalt);
+
+                //if (role != null || Name != null || Email != null) stock one
+                if (savedPasswordHash.Equals(user.Hash))
                 {
 
                     // If User information correct, let user login
